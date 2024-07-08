@@ -366,4 +366,4 @@ async def main(page: ft.Page):
         )
     )
     await awa
-ft.app(target=main)
+ft.app(target=main, assets_dir="assets")
