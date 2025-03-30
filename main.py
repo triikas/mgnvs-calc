@@ -4,7 +4,6 @@ from oauth2client.service_account import ServiceAccountCredentials
 import asyncio
 
 params = {}
-# awa = asyncio.create_task(connect())
 
 
 async def connect():
@@ -60,44 +59,16 @@ async def connect():
             "TRANSFER": TRANSFER,
         }
 
-# awa = asyncio.create_task(connect())
-# async def txt_connect(params, h_connect, page):
-#     await connect()
-#     if params != -1:
-#         h_connect.value = "Подключено"
-#         h_connect.color = "#32CD32"
-#         page.update()
 
 async def main(page: ft.Page):
-    # mgnvs_red = "#ab2524"
-    # q = connect()
     awa = connect()
-
-
-    # GENERAL = list(map(lambda x: int(x.value), worksheet2.range('I6:I43') + worksheet2.range('I46:I99')))
-    # LIVE = list(map(lambda x: int(x.value), worksheet2.range('M6:M43') + worksheet2.range('M46:M99')))
-    # FRESH = list(map(lambda x: int(x.value), worksheet2.range('P6:P43') + worksheet2.range('P46:P99')))
-
     mgnvs_red = "#ab2524"
     mgnvs_ret_text = ft.TextStyle(color=mgnvs_red)
-    page.title = "Flet counter example"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
-
-    # async def table_num(e):
-    #     param_list = [dd_departure.value, dd_direction.value, dd_transfer.value, dd_cargo_type.value]
-    #     if '' not in param_list:
-    #         for i in range(len(params["GENERAL"])):
-    #             if dd_departure.value == params["FROM"][i] and dd_direction.value == params["TO"][i] and dd_transfer.value == params["TRANSFER"][i]:
-    #                 t_num = params[dd_cargo_type.value.replace("/", "_")][i]
-    #                 break
-    #     else:
-    #         t_num = ''
 
     async def in_res(e):
         if params != -1:
-            # print(params["TRANSFER"])
             param_list = [dd_departure.value, dd_direction.value, dd_transfer.value, dd_cargo_type.value]
-            # print(param_list)
             t_num = ''
             if '' not in param_list and None not in param_list:
                 for i in range(len(params["GENERAL"])):
@@ -107,10 +78,6 @@ async def main(page: ft.Page):
 
                         break
             print(t_num)
-            # if t_num == "":
-            #     h_connect.value = "Нет подходящих"
-            #     h_res.value = "Нет подходящих"
-            #     return 0
             if tf_fuel.value == '' or tf_weight.value == '' or tf_volume.value == '' or tf_margin.value == '':
                 txt_weight.value = "Нет данных"
                 txt_res.value = "Нет данных"
@@ -151,61 +118,11 @@ async def main(page: ft.Page):
         ]
             page.update()
 
-    # async def set_from(e):
-    #     if dd_departure.value != None:
-    #         new_transfer = []
-    #         next = False
-    #         for i in range(len(params["GENERAL"])):
-    #             if params["TO"][i] == dd_direction.value and params["FROM"][i] == dd_departure.value:
-    #                 new_transfer.append(params["TRANSFER"][i])
-    #                 next = True
-    #             elif next:
-    #                 break
-    #         dd_transfer.options = list(map(lambda i: ft.dropdown.Option(i), new_transfer))
-    #         page.update()
-    #     else:
-    #         new_transfer = []
-    #         next = False
-    #         for i in range(len(params["GENERAL"])):
-    #             if params["TO"][i] == dd_direction.value:
-    #                 new_transfer.append(params["TRANSFER"][i])
-    #                 next = True
-    #             elif next:
-    #                 break
-    #         dd_transfer.options = list(map(lambda i: ft.dropdown.Option(i), new_transfer))
-    #         page.update()
-    #
-    #
-    # async def set_transfer(e):
-    #     if dd_transfer.value != None:
-    #         new_from = []
-    #         next = False
-    #         for i in range(len(params["GENERAL"])):
-    #             if params["TO"][i] == dd_direction.value and params["TRANSFER"][i] == dd_transfer.value:
-    #                 new_from.append(params["FROM"][i])
-    #                 next = True
-    #             elif next:
-    #                 break
-    #         dd_departure.options = list(map(lambda i: ft.dropdown.Option(i), new_from))
-    #         page.update()
-    #     else:
-    #         new_from = []
-    #         next = False
-    #         for i in range(len(params["GENERAL"])):
-    #             if params["TO"][i] == dd_direction.value:
-    #                 new_from.append(params["FROM"][i])
-    #                 next = True
-    #             elif next:
-    #                 break
-    #         dd_departure.options = list(map(lambda i: ft.dropdown.Option(i), new_from))
-    #         page.update()
-
     async def txt_connect(e):
 
         if h_connect.value != "Подключено":
             await connect()
             if params != -1:
-                # print(params)
                 h_connect.value = "Подключено"
                 h_connect.color = "#32CD32"
                 page.update()
@@ -219,22 +136,15 @@ async def main(page: ft.Page):
             ft.dropdown.Option("VKO / DME"),
         ],
         on_change=in_res,
-        # on_focus=txt_connect,
-        # on_blur=set_from,
-
     )
-
     dd_direction = ft.TextField(
         label="Направление",
         label_style=mgnvs_ret_text,
         border_color=mgnvs_red,
         hint_text="AAQ",
         on_change=in_res,
-        # on_focus=txt_connect,
         on_blur=set_to
     )
-    # tf_fuel = ft.TextField(value="5", label="Топливо", hint_text="6", label_style=mgnvs_ret_text,
-    #                        border_color=mgnvs_red, on_change=in_res, on_focus=txt_connect)
     dd_transfer = ft.Dropdown(
         label="Трансфер",
         label_style=mgnvs_ret_text,
@@ -245,8 +155,6 @@ async def main(page: ft.Page):
             ft.dropdown.Option("None STOP"),
         ],
         on_change=in_res,
-        # on_focus=txt_connect,
-        # on_blur=set_transfer
     )
     dd_cargo_type = ft.Dropdown(
         label="Тип груза",
@@ -266,7 +174,6 @@ async def main(page: ft.Page):
             ft.dropdown.Option("VACCINES"),
         ],
         on_change=in_res,
-        # on_focus = txt_connect,
     )
 
     h_weight = ft.Text("Вход", size=40)
@@ -274,27 +181,18 @@ async def main(page: ft.Page):
     h_connect = ft.Text("Не подключено", size=40, color=mgnvs_red)
     h_connect.value = "Подключено"
     h_connect.color = "#32CD32"
-    # h_connect = ft.Text("Подключение", size=40, color=mgnvs_red)
-
-
-
 
     txt_weight = ft.Text(str(0), size=30, color=mgnvs_red)
     txt_res = ft.Text(str(0), size=30, color=mgnvs_red)
 
+    def foo(e, data):
+        print(data)
 
     tf_fuel = ft.TextField(value="6", label="Топливо", hint_text="6", label_style=mgnvs_ret_text, border_color=mgnvs_red, on_change=in_res)#, on_focus=txt_connect)
     tf_margin = ft.TextField(value="20", label="Маржа, %", label_style=mgnvs_ret_text, border_color=mgnvs_red, on_change=in_res)#, on_focus=txt_connect)
     tf_num_places = ft.TextField(label="Кол-во мест, шт", label_style=mgnvs_ret_text, border_color=mgnvs_red, on_change=in_res)#, on_focus=txt_connect)
     tf_weight = ft.TextField(label="Вес, кг", label_style=mgnvs_ret_text, border_color=mgnvs_red, on_change=in_res)#, on_focus=txt_connect)
-    tf_volume = ft.TextField(label="Объём, м³", label_style=mgnvs_ret_text, border_color=mgnvs_red, on_change=in_res)#, on_focus=txt_connect)
-    # def minus_click(e):
-    #     txt_number.value = str(int(txt_number.value) - 1)
-    #     page.update()
-    #
-    # def plus_click(e):
-    #     txt_number.value = str(int(txt_number.value) + 1)
-    #     page.update()
+    tf_volume = ft.TextField(label="Объём, м³", label_style=mgnvs_ret_text, border_color=mgnvs_red, on_change=in_res, on_focus=lambda e: foo(e, "asd"))#, on_focus=txt_connect)
 
     page.vertical_alignment = ft.MainAxisAlignment.START
     page.title = "Калькулятор"
@@ -336,25 +234,10 @@ async def main(page: ft.Page):
 
                             ),
                             alignment=ft.alignment.top_center,
-                            # bgcolor=ft.colors.CYAN_700,
                             padding=0,
                             margin=0
                         ),
                         h_connect,
-                        # ft.Container(
-                        #     content=ft.Column(
-                        #         [
-                        #             h_connect,
-                        #         ],
-                        #         height=100,
-                        #         alignment=ft.MainAxisAlignment.END,
-                        #
-                        #     ),
-                        #     alignment=ft.alignment.bottom_center,
-                        #     # bgcolor=ft.colors.CYAN_700,
-                        #     padding=0,
-                        #     margin=0
-                        # ),
                         ],
                         alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                     )
